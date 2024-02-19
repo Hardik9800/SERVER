@@ -4,10 +4,7 @@ const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authMiddleware = require('./services/AuthService');
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE ');
-header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
+var path = require('path');
 
 var cors = require('cors')
 
@@ -28,6 +25,15 @@ const app = express();
 const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded());
+
+
+
+app.use(express.static(path.join(__dirname, 'docs')));
+module.exports = app;
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/docs/index.html'));
+});
 
 
 
