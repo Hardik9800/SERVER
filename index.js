@@ -10,8 +10,8 @@ var cors = require('cors')
 
 dotenv.config();
 
-
 const databaseUrl = 'mongodb+srv://hardikgupta7500:hardik19@cluster0.kl1iqow.mongodb.net/database_name';
+
 
 mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -34,7 +34,7 @@ app.use(express.urlencoded());
 app.use(cors())
 const io = socketIO(server, {
   cors: {
-    origin: 'https://hardik9800.github.io',
+    origin: 'https://hardik9800.github.io/',
     methods: ['GET', 'POST'],
   },
 });
