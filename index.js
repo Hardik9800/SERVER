@@ -10,14 +10,8 @@ var cors = require('cors')
 
 dotenv.config();
 
-// mongoose.connect(//process.env.MONGODB_URI
-//   mongodb:localhost:27017, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
 
-// Replace 'your_database_url' with your actual MongoDB connection string
-const databaseUrl = 'mongodb://localhost:27017/your_database_name';
+const databaseUrl = 'mongodb+srv://hardikgupta7500:hardik19@cluster0.kl1iqow.mongodb.net/database_name';
 
 mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
