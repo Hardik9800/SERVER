@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken'); // Import jwt here
 const User = require('../models/User');
 
 async function register(username, password) {
-
   const user = new User({ username, password});
   await user.save();
 }
