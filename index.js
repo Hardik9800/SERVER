@@ -7,6 +7,8 @@ const dotenv = require('dotenv');
 const authMiddleware = require('./services/AuthService');
 
 var cors = require('cors')
+app.use(cors());
+
 
 dotenv.config();
 
