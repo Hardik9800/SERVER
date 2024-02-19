@@ -34,7 +34,7 @@ app.use(express.urlencoded());
 app.use(cors())
 const io = socketIO(server, {
   cors: {
-    origin: 'https://hardik9800.github.io/',
+    origin: 'https://hardik9800.github.io',
     methods: ['GET', 'POST'],
   },
 });
