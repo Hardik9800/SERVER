@@ -1,3 +1,4 @@
+const app = express();
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
@@ -13,15 +14,17 @@ dotenv.config();
 const databaseUrl = 'mongodb+srv://hardikgupta7500:hardik19@cluster0.kl1iqow.mongodb.net/database_name';
 
 mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB!');
 });
-
-const app = express();
+app.use(function(req, res, next) {
+res.setHeader('Access-Control-Allow-Origin: *');
+res.setHeader('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE ');
+res.setHeader('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
+})
 const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded());
@@ -87,11 +90,13 @@ chatSockets  =(socketServer)=>{
   });
 
 }
+const app = express()
 
+app.get('/', function (req, res) {
+  res.send('')
+})
 module.exports = io;
-
 const PORT = process.env.PORT || 3001;
-
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
