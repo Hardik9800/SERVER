@@ -3,12 +3,9 @@ const http = require('http');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-
 const authMiddleware = require('./services/AuthService');
 
 var cors = require('cors')
-app.use(cors());
-
 
 dotenv.config();
 
@@ -33,14 +30,14 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 
-app.use(cors())
+// app.use(cors())
 
-const io = socketIO(server, {
-  cors: {
-    origin: 'https://hardik9800.github.io/CHATAPP-CLIENT/',
-    methods: ['GET', 'POST'],
-  },
-});
+// const io = socketIO(server, {
+//   cors: {
+//     origin: 'https://hardik9800.github.io/CHATAPP-CLIENT/',
+//     methods: ['GET', 'POST'],
+//   },
+// });
 
 // Use WebSocketService to handle WebSocket connections
 //io.on('connection', WebSocketService);
@@ -55,42 +52,37 @@ const chatRouter = require('./controllers/ChatController');
 app.use('/auth', authRouter);
 app.use('/chat', chatRouter);
 
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  // Handle user joining
-  socket.on('join', (user) => {
-    console.log('User joined:', user);
-    io.emit('userJoined', user);
+chatSockets  =(socketServer)=>{
+  let io = require('socket.io')(socketServer ,{
+      cors:{
+          origin:"*"
+      }
   });
 
-  // Handle incoming messages
-  socket.on('message', (data) => {
-    console.log('Received message:', data);
-    io.emit('message', data);
+  io.sockets.on('connection', function(socket){
+      console.log('new connection received', socket.id);
+
+      socket.on('disconnect', function(){
+          console.log('socket disconnected!');
+      });
+      socket.on('join_room', function(data){
+          console.log('joining request rec.', data);
+
+          socket.join(data.chatroom);
+
+          io.in(data.chatroom).emit('user_joined', data);
+      })
+
+       // CHANGE :: detect send_message and broadcast to everyone in the room
+       socket.on('send_message', function(data){
+          io.in(data.chatroom).emit('receive_message', data);
+          });
+
   });
 
-  // Handle user leaving
-  socket.on('leave', (user) => {
-    console.log('User left:', user);
-    io.emit('userLeft', user);
-  });
-
-  // Handle typing indicators
-  socket.on('typing', (user) => {
-    console.log('User is typing:', user);
-    io.emit('userTyping', user);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-  });
-});
+}
 
 module.exports = io;
-
-// Other middleware and error handling...
 
 const PORT = process.env.PORT || 3001;
 
