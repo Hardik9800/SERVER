@@ -3,9 +3,7 @@ const jwt = require('jsonwebtoken'); // Import jwt here
 const User = require('../models/User');
 
 async function register(username, password) {
-  // Hash the password before storing it
-  // const hashedPassword = await bcrypt.hash(password, 10);
-  // console.log(hashedPassword);
+
   const user = new User({ username, password});
   await user.save();
 }

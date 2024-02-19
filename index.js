@@ -31,8 +31,12 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'docs')));
 module.exports = app;
 
-app.get('*', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/docs/index.html'));
+});
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 
