@@ -15,7 +15,6 @@ dotenv.config();
 
 const databaseUrl = 'mongodb+srv://hardikgupta7500:hardik19@cluster0.kl1iqow.mongodb.net/database_name';
 
-
 mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
@@ -25,11 +24,8 @@ db.once('open', () => {
   console.log('Connected to MongoDB!');
 });
 
-
 const app = express();
 const server = http.createServer(app);
-
-
 app.use(express.json());
 app.use(express.urlencoded());
 
