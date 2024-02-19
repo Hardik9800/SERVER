@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const WebSocketService = require('../services/WebSocketService');
 const Message = require('../models/Message');
 const AuthService = require('../services/AuthService');
 
