@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authMiddleware = require('./services/AuthService');
 
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE
+Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization
+
 var cors = require('cors')
 
 dotenv.config();
@@ -30,14 +34,14 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 
-// app.use(cors())
 
-// const io = socketIO(server, {
-//   cors: {
-//     origin: 'https://hardik9800.github.io/CHATAPP-CLIENT/',
-//     methods: ['GET', 'POST'],
-//   },
-// });
+
+const io = socketIO(server, {
+  cors: {
+    origin: 'https://hardik9800.github.io/CHATAPP-CLIENT/',
+    methods: ['GET', 'POST'],
+  },
+});
 
 // Use WebSocketService to handle WebSocket connections
 //io.on('connection', WebSocketService);
